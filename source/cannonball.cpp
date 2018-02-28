@@ -1,6 +1,8 @@
 #include "Cannonball.h"
 #include "Consts.h"
 
+using namespace ai;
+
 void Cannonball::setSpeed(double vx0, double vz0)
 {
     _vx0 = vx0;
@@ -14,8 +16,13 @@ void Cannonball::addSpped(double dvx, double dvz){
 
 void Cannonball::moveByTick(double dt){
     // формулы в предположении, что ускорение не зависит от времени
-    x_ = x_ + _vx0 * dt;
-    z_ = z_ + _v0z * dt - G*dt*dt/2;
+    _x = _x + _vx0 * dt;
+    _z = _z + _vz0 * dt - G*dt*dt/2;
+}
+
+bool Cannonball::atStart()
+{
+    return qFuzzyIsNull(_x) && qFuzzyIsNull(_z);
 }
 
 
