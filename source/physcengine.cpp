@@ -1,5 +1,7 @@
 #include "physcengine.h"
 #include "cannonball.h"
+#include "Consts.h"
+#include "target.h"
 
 #include <fstream> // Переделать сохранение на QFile
 #include <QtMath>
@@ -11,16 +13,26 @@ void PhycsEngine::fire(double start_speed, double angle){
     qDebug() << "Вызвана функция Fire" << start_speed << angle;
 
     Cannonball cannonball;
+    Target target;
     cannonball.addSpped(start_speed * qCos(angle*M_PI/180), start_speed * qSin(angle*M_PI/180));
 
     // Проверка на зацикливание
-    while (cannonball.z() <= 0 && !cannonball.atStart()){
+    cannonball.moveByTick(T);
+    while (cannonball.z() >= 0 ){
+        cannonball.addSpped(0, - 9.8 *T);
         cannonball.moveByTick(T);
     }
 
-    // Debug!!! Убрать потом
-    _lastResult += 10.0;
-    emit lastResultChanged(_lastResult);
+//    // Debug!!! Убрать потом
+//    _lastResult += 10.0;
+//    emit lastResultChanged(_lastResult);
+
+    qDebug() << "x = " <<cannonball.x();
+    qDebug() << "z = " << cannonball.z();
+
+    _distance = target.distance(cannonball.x());
+    emit distanceChanged(_distance);
+
     // Вычисляем расстояние до цели (нужно ещё задать где-то местоположение цели).
 }
 
@@ -49,4 +61,10 @@ void PhycsEngine::setLastResult(double lastResult)
 
     _lastResult = lastResult;
     emit lastResultChanged(_lastResult);
+}
+
+void PhycsEngine::setDistance(double distance)
+{
+    _distance = distance;
+    emit distanceChanged(_distance);
 }

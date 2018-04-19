@@ -16,8 +16,8 @@ void Cannonball::addSpped(double dvx, double dvz){
 
 void Cannonball::moveByTick(double dt){
     // формулы в предположении, что ускорение не зависит от времени
-    _x = _x + _vx0 * dt;
-    _z = _z + _vz0 * dt - G*dt*dt/2;
+    _x = _x + _vx * dt;
+    _z = _z + _vz * dt;
 }
 
 bool Cannonball::atStart()

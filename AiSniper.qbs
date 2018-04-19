@@ -31,8 +31,11 @@ Project {
             "source/cannonball.cpp",
             "source/cannonball.h",
             "source/main.cpp",
+            "source/notes.cpp",
             "source/physcengine.cpp",
             "source/physcengine.h",
+            "source/target.cpp",
+            "source/target.h",
         ]
 
         Group {     // Properties for the produced executable
